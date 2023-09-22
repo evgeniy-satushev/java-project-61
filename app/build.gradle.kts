@@ -3,6 +3,7 @@ plugins {
     id("se.patrikerdes.use-latest-versions") version "0.2.18"
     id("com.github.ben-manes.versions") version "0.41.0"
     application
+    checkstyle
 }
 
 group = "hexlet.code"
@@ -24,4 +25,10 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+tasks.jar {
+    manifest {
+        attributes(mapOf("Main-Class" to application.mainClass))
+    }
 }
