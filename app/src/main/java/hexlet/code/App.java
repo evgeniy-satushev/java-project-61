@@ -1,10 +1,17 @@
 package hexlet.code;
 
+import hexlet.code.games.Calc;
+import hexlet.code.games.Even;
+
 import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
-        String[] games = new String[] {"1 - Greet", "2 - Even", "0 - Exit"};
+        String[] games = new String[] {
+                "1 - Greet",
+                "2 - Even",
+                "3 - Calc",
+                "0 - Exit"};
         System.out.println("Please enter the game number and press Enter");
         Scanner sc = new Scanner(System.in);
         for (String game: games) {
@@ -17,12 +24,15 @@ public class App {
                 sc.close();
                 break;
             case 1:
-                Cli.welcome();
+                Engine.welcome();
                 break;
             case 2:
-                Cli.welcome();
                 Even even = new Even();
                 even.evenNumbers();
+                break;
+            case 3:
+                Calc calc = new Calc();
+                calc.calculation();
                 break;
         }
         sc.close();
