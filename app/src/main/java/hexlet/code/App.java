@@ -2,6 +2,7 @@ package hexlet.code;
 
 import hexlet.code.games.Calc;
 import hexlet.code.games.Even;
+import hexlet.code.games.Gcd;
 
 import java.util.Scanner;
 
@@ -11,6 +12,7 @@ public class App {
                 "1 - Greet",
                 "2 - Even",
                 "3 - Calc",
+                "4 - GCD",
                 "0 - Exit"};
         System.out.println("Please enter the game number and press Enter");
         Scanner sc = new Scanner(System.in);
@@ -33,6 +35,10 @@ public class App {
             case 3:
                 Calc calc = new Calc();
                 calc.calculation();
+                break;
+            case 4:
+                Gcd gcd = new Gcd();
+                gcd.greatestCommonDiv();
                 break;
         }
         sc.close();
