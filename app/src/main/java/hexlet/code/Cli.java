@@ -5,7 +5,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Scanner;
 
 public class Cli implements Engine {
-    protected static String welcome() {
+     public String welcome() {
         System.out.println("Welcome to the Brain Games!");
         Scanner scanner = new Scanner(System.in);
         System.out.print("May I have yor name? ");

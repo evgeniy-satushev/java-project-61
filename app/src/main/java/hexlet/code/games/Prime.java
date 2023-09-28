@@ -1,0 +1,41 @@
+package hexlet.code.games;
+
+import hexlet.code.Engine;
+import org.apache.commons.math3.primes.Primes;
+
+import java.util.Random;
+import java.util.Scanner;
+
+public class Prime extends Even implements Engine {
+    private final String description = "Answer 'yes' if given number is prime. Otherwise answer 'no'.";
+    private String userName;
+    private int correctAnswerCounter = 0;
+    private boolean cycleOperation = true;
+    public void primeNumbers() {
+        userName = super.welcome();
+        super.description(description);
+        Random random = new Random();
+        Scanner sc = new Scanner(System.in);
+        while (super.exitGame(correctAnswerCounter, userName, cycleOperation)) {
+            int randomNumber = random.nextInt(50);
+            super.showQuestion(Integer.toString(randomNumber));
+            String answer = sc.nextLine().trim();
+            String checkWrongAnswer = showWrongAnswer(answer, randomNumber, userName);
+            correctAnswerCounter = equalAnswer(answer, checkWrongAnswer, randomNumber, correctAnswerCounter);
+        }
+    }
+    @Override
+    public String showWrongAnswer(String answer, int result, String userName) {
+        String correctAnswer = Primes.isPrime(result) ? "'yes'." : "'no'.";
+        return "'" + answer + "'"
+                .concat(" is wrong answer ;(. Correct answer was ")
+                .concat(correctAnswer) + "\n"
+                .concat(" try again ") + userName;
+    }
+    @Override
+    public boolean checkAnswer(String answer, int result) {
+        if (Primes.isPrime(result) && "yes".equalsIgnoreCase(answer)) {
+            return true;
+        } else return "no".equalsIgnoreCase(answer);
+    }
+}

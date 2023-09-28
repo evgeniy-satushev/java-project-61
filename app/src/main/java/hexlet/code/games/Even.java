@@ -7,11 +7,12 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Even extends Cli implements Engine {
+    private final String description = "Answer 'yes' if the number is even, otherwise answer 'no'.";
+    private String userName;
+    private int correctAnswerCounter = 0;
+    private boolean cycleOperation = true;
     public void evenNumbers() {
-        int correctAnswerCounter = 0;
-        boolean cycleOperation = true;
-        String userName = Cli.welcome();
-        String description = "Answer 'yes' if the number is even, otherwise answer 'no'.";
+        userName = super.welcome();
         super.description(description);
         Random random = new Random();
         Scanner sc = new Scanner(System.in);
@@ -23,6 +24,11 @@ public class Even extends Cli implements Engine {
             correctAnswerCounter = equalAnswer(answer, checkWrongAnswer, randomNumber, correctAnswerCounter);
         }
     }
+    public boolean checkAnswer(String answer,int result) {
+        if (result % 2 == 0 && "yes".equalsIgnoreCase(answer)) {
+            return true;
+        } else return result % 2 != 0 && "no".equalsIgnoreCase(answer);
+    }
     @Override
     public int equalAnswer(String answer, String wrongAnswer, int result, int correctAnswerCounter) {
         if (checkAnswer(answer, result)) {
@@ -33,11 +39,5 @@ public class Even extends Cli implements Engine {
             correctAnswerCounter = 0;
         }
         return correctAnswerCounter;
-    }
-    public boolean checkAnswer(String answer,int result) {
-        if (result % 2 == 0 && "yes".equalsIgnoreCase(answer)) {
-            return true;
-        } else
-            return result % 2 != 0 && "no".equalsIgnoreCase(answer);
     }
 }
