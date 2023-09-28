@@ -24,7 +24,7 @@ public class Even extends Cli implements Engine {
             correctAnswerCounter = equalAnswer(answer, checkWrongAnswer, randomNumber, correctAnswerCounter);
         }
     }
-    public boolean checkAnswer(String answer,int result) {
+    public boolean checkAnswer(String answer, int result) {
         if (result % 2 == 0 && "yes".equalsIgnoreCase(answer)) {
             return true;
         } else return result % 2 != 0 && "no".equalsIgnoreCase(answer);

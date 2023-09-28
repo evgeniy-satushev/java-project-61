@@ -5,7 +5,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Scanner;
 
 public class Cli implements Engine {
-     public String welcome() {
+    public String welcome() {
         System.out.println("Welcome to the Brain Games!");
         Scanner scanner = new Scanner(System.in);
         System.out.print("May I have yor name? ");
@@ -26,7 +26,7 @@ public class Cli implements Engine {
     public boolean exitGame(int correctAnswerCounter, String userName, boolean cycleOperation) {
         if (correctAnswerCounter == 3) {
             cycleOperation = false;
-            System.out.println("Congratulation " + userName +'!');
+            System.out.println("Congratulation " + userName + '!');
         }
         return cycleOperation;
     }
