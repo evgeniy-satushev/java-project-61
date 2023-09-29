@@ -27,6 +27,8 @@ public class Cli implements Engine {
         if (correctAnswerCounter == 3) {
             cycleOperation = false;
             System.out.println("Congratulations, " + userName + '!');
+        } else if (correctAnswerCounter == -1) {
+            cycleOperation = false;
         }
         return cycleOperation;
     }
@@ -50,7 +52,7 @@ public class Cli implements Engine {
             System.out.println("Correct!");
         } else {
             System.out.println(wrongAnswer);
-            correctAnswerCounter = 0;
+            correctAnswerCounter = -1;
         }
         return correctAnswerCounter;
     }

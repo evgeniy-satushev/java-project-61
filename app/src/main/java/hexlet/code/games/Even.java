@@ -38,7 +38,7 @@ public class Even extends Cli implements Engine {
             correctAnswerCounter++;
         } else {
             System.out.println(wrongAnswer);
-            correctAnswerCounter = 0;
+            correctAnswerCounter = -1;
         }
         return correctAnswerCounter;
     }
