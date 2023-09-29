@@ -26,7 +26,7 @@ public class Cli implements Engine {
     public boolean exitGame(int correctAnswerCounter, String userName, boolean cycleOperation) {
         if (correctAnswerCounter == 3) {
             cycleOperation = false;
-            System.out.println("Congratulation " + userName + '!');
+            System.out.println("Congratulation, " + userName + '!');
         }
         return cycleOperation;
     }
@@ -41,7 +41,7 @@ public class Cli implements Engine {
         return "'" + answer + "'"
                 .concat(" is wrong answer ;(. Correct answer was ")
                 .concat(correctAnswer) + "\n"
-                .concat(" try again ") + userName;
+                .concat("Let's try again, ") + userName;
     }
     @Override
     public int equalAnswer(String answer, String wrongAnswer, int result, int correctAnswerCounter) {
