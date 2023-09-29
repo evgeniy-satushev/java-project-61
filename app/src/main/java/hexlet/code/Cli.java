@@ -43,7 +43,7 @@ public class Cli implements Engine {
         return "'" + answer + "'"
                 .concat(" is wrong answer ;(. Correct answer was ")
                 .concat(correctAnswer) + "\n"
-                .concat("Let's try again, ") + userName;
+                .concat("Let's try again, ") + userName + "!";
     }
     @Override
     public int equalAnswer(String answer, String wrongAnswer, int result, int correctAnswerCounter) {
