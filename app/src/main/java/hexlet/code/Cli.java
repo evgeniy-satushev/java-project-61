@@ -19,8 +19,8 @@ public class Cli implements Engine {
     }
     @Override
     public void showQuestion(String expression) {
-        System.out.println("Question : " + expression);
-        System.out.print("Your Answer : ");
+        System.out.println("Question: " + expression);
+        System.out.print("Your Answer: ");
     }
     @Override
     public boolean exitGame(int correctAnswerCounter, String userName, boolean cycleOperation) {
