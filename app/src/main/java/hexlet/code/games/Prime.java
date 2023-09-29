@@ -36,7 +36,7 @@ public class Prime extends Even implements Engine {
         if (Primes.isPrime(result) && "yes".equalsIgnoreCase(answer)) {
             return true;
         } else {
-            return "no".equalsIgnoreCase(answer);
+            return !(Primes.isPrime(result)) && "no".equalsIgnoreCase(answer);
         }
     }
 }
