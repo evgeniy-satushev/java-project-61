@@ -21,7 +21,7 @@ public class Prime extends Even implements Engine {
             super.showQuestion(Integer.toString(randomNumber));
             String answer = sc.nextLine().trim();
             String checkWrongAnswer = showWrongAnswer(answer, randomNumber);
-            correctAnswerCounter = equalAnswer(answer, checkWrongAnswer, randomNumber, correctAnswerCounter);
+            correctAnswerCounter = super.equalAnswer(answer, checkWrongAnswer, randomNumber, correctAnswerCounter);
         }
     }
     public String showWrongAnswer(String answer, int result) {
@@ -29,7 +29,7 @@ public class Prime extends Even implements Engine {
         return "'" + answer + "'"
                 .concat(" is wrong answer ;(. Correct answer was ")
                 .concat(correctAnswer) + "\n"
-                .concat(" try again ") + this.userName;
+                .concat("Let's try again ") + this.userName;
     }
     @Override
     public boolean checkAnswer(String answer, int result) {
