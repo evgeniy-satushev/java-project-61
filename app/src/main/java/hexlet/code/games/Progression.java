@@ -22,7 +22,7 @@ public class Progression extends Calc implements Engine {
             String[] numbers = new String[capacity];
             getProgression(numbers, random);
             int hiddenElement = getAnswer(question, numbers, random);
-            super.showQuestion(question.toString());
+            super.showQuestion(question.toString().trim());
             String answer = Integer.toString(scanner.nextInt()).trim();
             String checkWrongAnswer = super.showWrongAnswer(answer, hiddenElement, userName);
             correctAnswerCounter = super.equalAnswer(answer, checkWrongAnswer, hiddenElement, correctAnswerCounter);
