@@ -26,7 +26,7 @@ public class Cli implements Engine {
     public boolean exitGame(int correctAnswerCounter, String userName, boolean cycleOperation) {
         if (correctAnswerCounter == 3) {
             cycleOperation = false;
-            System.out.println("Congratulation, " + userName + '!');
+            System.out.println("Congratulations, " + userName + '!');
         }
         return cycleOperation;
     }
