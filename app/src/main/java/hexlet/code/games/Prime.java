@@ -29,7 +29,7 @@ public class Prime extends Even implements Engine {
         return "'" + answer + "'"
                 .concat(" is wrong answer ;(. Correct answer was ")
                 .concat(correctAnswer) + "\n"
-                .concat("Let's try again, ") + this.userName;
+                .concat("Let's try again, ") + this.userName + "!";
     }
     @Override
     public boolean checkAnswer(String answer, int result) {
