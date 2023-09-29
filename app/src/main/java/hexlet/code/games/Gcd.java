@@ -7,7 +7,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Gcd extends Cli implements Engine {
-    private final String description = "Find the greatest common divisor of given numbers";
+    private final String description = "Find the greatest common divisor of given numbers.";
     private String userName;
     private int result;
     public void greatestCommonDiv() {
