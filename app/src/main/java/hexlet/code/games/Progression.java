@@ -10,9 +10,9 @@ public class Progression extends Calc implements Engine {
     private final String description = "What number is missing in the progression?";
     private String userName;
     private final int capacity = 10;
-    private int correctAnswerCounter = 0;
-    private boolean cycleOperation = true;
     public void progression() {
+        int correctAnswerCounter = 0;
+        boolean cycleOperation = true;
         userName = super.welcome();
         super.description(description);
         Random random = new Random();

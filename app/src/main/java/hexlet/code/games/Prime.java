@@ -9,9 +9,9 @@ import java.util.Scanner;
 public class Prime extends Even implements Engine {
     private final String description = "Answer 'yes' if given number is prime. Otherwise answer 'no'.";
     private String userName;
-    private int correctAnswerCounter = 0;
-    private boolean cycleOperation = true;
     public void primeNumbers() {
+        int correctAnswerCounter = 0;
+        boolean cycleOperation = true;
         userName = super.welcome();
         super.description(description);
         Random random = new Random();
@@ -20,22 +20,23 @@ public class Prime extends Even implements Engine {
             int randomNumber = random.nextInt(50);
             super.showQuestion(Integer.toString(randomNumber));
             String answer = sc.nextLine().trim();
-            String checkWrongAnswer = showWrongAnswer(answer, randomNumber, userName);
+            String checkWrongAnswer = showWrongAnswer(answer, randomNumber);
             correctAnswerCounter = equalAnswer(answer, checkWrongAnswer, randomNumber, correctAnswerCounter);
         }
     }
-    @Override
-    public String showWrongAnswer(String answer, int result, String userName) {
+    public String showWrongAnswer(String answer, int result) {
         String correctAnswer = Primes.isPrime(result) ? "'yes'." : "'no'.";
         return "'" + answer + "'"
                 .concat(" is wrong answer ;(. Correct answer was ")
                 .concat(correctAnswer) + "\n"
-                .concat(" try again ") + userName;
+                .concat(" try again ") + this.userName;
     }
     @Override
     public boolean checkAnswer(String answer, int result) {
         if (Primes.isPrime(result) && "yes".equalsIgnoreCase(answer)) {
             return true;
-        } else return "no".equalsIgnoreCase(answer);
+        } else {
+            return "no".equalsIgnoreCase(answer);
+        }
     }
 }

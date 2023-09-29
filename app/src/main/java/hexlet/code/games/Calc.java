@@ -9,17 +9,17 @@ import java.util.Scanner;
 public class Calc extends Cli implements Engine {
     private final String description = "What is the result of the expression?";
     private String userName;
-    private int correctAnswerCounter = 0;
     private int changeOperator = 0;
     private int result = 0;
     private char operator = '+';
-    private boolean cycleOperation = true;
     public void calculation() {
+        int correctAnswerCounter = 0;
+        boolean cycleOperation = true;
         userName = welcome();
         super.description(description);
         Random random = new Random();
         Scanner scanner = new Scanner(System.in);
-        while(super.exitGame(correctAnswerCounter, userName, cycleOperation)) {
+        while (super.exitGame(correctAnswerCounter, userName, cycleOperation)) {
             int firstOperand = random.nextInt(1, 10);
             int secondOperand = random.nextInt(1, 10);
             setChangeOperator(firstOperand, secondOperand);
@@ -46,6 +46,8 @@ public class Calc extends Cli implements Engine {
                 operator = '*';
                 changeOperator = 0;
                 break;
+            default:
+                System.out.println("Incorrect input value");
         }
     }
 }

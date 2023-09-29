@@ -9,9 +9,9 @@ import java.util.Scanner;
 public class Even extends Cli implements Engine {
     private final String description = "Answer 'yes' if the number is even, otherwise answer 'no'.";
     private String userName;
-    private int correctAnswerCounter = 0;
-    private boolean cycleOperation = true;
     public void evenNumbers() {
+        int correctAnswerCounter = 0;
+        boolean cycleOperation = true;
         userName = super.welcome();
         super.description(description);
         Random random = new Random();
@@ -27,7 +27,9 @@ public class Even extends Cli implements Engine {
     public boolean checkAnswer(String answer, int result) {
         if (result % 2 == 0 && "yes".equalsIgnoreCase(answer)) {
             return true;
-        } else return result % 2 != 0 && "no".equalsIgnoreCase(answer);
+        } else {
+            return result % 2 != 0 && "no".equalsIgnoreCase(answer);
+        }
     }
     @Override
     public int equalAnswer(String answer, String wrongAnswer, int result, int correctAnswerCounter) {
