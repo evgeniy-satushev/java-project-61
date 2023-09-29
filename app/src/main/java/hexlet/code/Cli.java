@@ -8,7 +8,7 @@ public class Cli implements Engine {
     public String welcome() {
         System.out.println("Welcome to the Brain Games!");
         Scanner scanner = new Scanner(System.in);
-        System.out.print("May I have yor name? ");
+        System.out.print("May I have your name? ");
         String userName = scanner.nextLine();
         System.out.println("Hello " + userName + '!');
         return userName;
