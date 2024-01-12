@@ -4,6 +4,7 @@ import hexlet.code.logic.Creatable;
 import hexlet.code.logic.Engine;
 import hexlet.code.logic.Utils;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,6 +48,7 @@ public class Progression implements Creatable {
         Engine.getRules(rules);
         Engine.run(rounds, rulesAndRounds, userName);
     }
+    
     /**
      * Данный метод генерирует числовую прогрессию с одним спрятанным значением и
      * имеющий вид "..", так же, в качестве корректного ответа вместо ".." он сохраняется.
@@ -92,7 +94,7 @@ public class Progression implements Creatable {
     private String getProgressionWinHiddenElement(final String progression) {
         StringBuilder stringBuilder = new StringBuilder();
         int index = 0;
-        int hide = Utils.generate(0, (progression.length() / 2) - 1);
+        int hide = Utils.generate(0, (progression.length() / 3));
         for (String number : progression.split(" ")) {
             if (index == hide) {
                 stringBuilder
