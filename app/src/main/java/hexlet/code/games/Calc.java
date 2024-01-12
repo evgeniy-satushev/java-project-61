@@ -29,12 +29,12 @@ public class Calc implements Creatable {
 
     /**
      * Конструктор принимает только имя пользователя и количество раундов.
-     * @param  name пользователя (игрока).
-     * @param numberOfRounds количество раундов.
+     * @param userName пользователя (игрока).
+     * @param rounds количество раундов.
      */
-    public Calc(final String name, final int numberOfRounds) {
-        this.userName = name;
-        this.rounds = numberOfRounds;
+    public Calc(final String userName, final int rounds) {
+        this.userName = userName;
+        this.rounds = rounds;
     }
     /**
      * Метод calc() представляет окончательную сборку игры и последующий запуск её при вызове.

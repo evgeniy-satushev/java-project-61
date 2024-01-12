@@ -59,7 +59,6 @@ public class Even implements Creatable {
         Map<String, String> temp = new HashMap<>();
         Predicate<Integer> condition = Utils::isEvenNumber;
         while (temp.size() < rounds) {
-//            int number = Utils.generate(1, 100);
             int number = Utils.generate(Numbers.ONE_HUNDRED.getValue());
             temp.put(String.valueOf(number), condition.test(number) ? "yes" : "no");
         }

@@ -59,8 +59,7 @@ public class Prime implements Creatable {
         Map<String, String> temp = new HashMap<>();
         final Predicate<Integer> condition = Primes::isPrime;
         while (temp.size() < rounds) {
-//            int number = Utils.generate(1, 100);
-            int number = Utils.generate(Numbers.ONE.getValue(), Numbers.ONE_HUNDRED.getValue());
+            int number = Utils.generate(Numbers.ONE_HUNDRED.getValue());
             temp.put(String.valueOf(number), condition.test(number) ? "yes" : "no");
         }
         return temp;
