@@ -26,7 +26,9 @@ dependencies {
     testImplementation("junit:junit:4.13.1")
 
 }
-
+tasks.getByName("run", JavaExec::class) {
+    standardInput = System.`in`
+}
 tasks.jar {
     manifest {
         attributes(mapOf("Main-Class" to application.mainClass))
