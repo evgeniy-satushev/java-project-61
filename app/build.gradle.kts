@@ -27,10 +27,6 @@ dependencies {
 
 }
 
-tasks.test {
-    useJUnitPlatform()
-}
-
 tasks.jar {
     manifest {
         attributes(mapOf("Main-Class" to application.mainClass))

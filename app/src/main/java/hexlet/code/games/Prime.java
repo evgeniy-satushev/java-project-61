@@ -1,42 +1,66 @@
 package hexlet.code.games;
 
-import hexlet.code.Engine;
+import hexlet.code.logic.Creatable;
+import hexlet.code.logic.Engine;
+import hexlet.code.logic.Utils;
 import org.apache.commons.math3.primes.Primes;
 
-import java.util.Random;
-import java.util.Scanner;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Predicate;
 
-public class Prime extends Even implements Engine {
-    private final String description = "Answer 'yes' if given number is prime. Otherwise answer 'no'.";
-    private String userName;
+/**
+ * игра "Простые числа" заключается в том, что бы дать ответ - является ли данное число
+ * простым или нет.
+ * Пример:
+ *      Answer: Answer 'yes' if given number is prime. Otherwise answer 'no'.
+ *      Question: 19
+ *      Your Answer: yes
+ *      Correct!
+ */
+public class Prime implements Creatable {
+    // имя пользователя (игрока) передаваемое через параметры конструктора.
+    private final String userName;
+    // количество раундов, настраиваемых через параметры конструктора.
+    private final int rounds;
+    /**
+     * Конструктор принимает только имя пользователя и количество раундов.
+     * @param userName имя пользователя (игрока).
+     * @param rounds количество раундов.
+     */
+    public Prime(final String userName, int rounds) {
+        this.userName = userName;
+        this.rounds = rounds;
+    }
+    /**
+     * Метод evenNumber() представляет окончательную сборку игры и последующий запуск её при вызове.
+     * Метод подразделяет структуру в себе в виде Map, содержащую выражение (вопрос) как ключ
+     * и ответ в виде значения Мар, далее выводится на экран условие, после чего Мар передаётся в
+     * метод run(rounds, rulesAndRounds, userName) и запускает игру.
+     * @see Engine
+     */
     public void primeNumbers() {
-        int correctAnswerCounter = 0;
-        boolean cycleOperation = true;
-        userName = super.welcome();
-        super.description(description);
-        Random random = new Random();
-        Scanner sc = new Scanner(System.in);
-        while (super.exitGame(correctAnswerCounter, userName, cycleOperation)) {
-            int randomNumber = random.nextInt(50);
-            super.showQuestion(Integer.toString(randomNumber));
-            String answer = sc.nextLine().trim();
-            String checkWrongAnswer = showWrongAnswer(answer, randomNumber);
-            correctAnswerCounter = super.equalAnswer(answer, checkWrongAnswer, randomNumber, correctAnswerCounter);
-        }
+        Map<String, String> rulesAndRounds = fill();
+        String rules = "Answer 'yes' if given number is prime. Otherwise answer 'no'.";
+        Engine.getRules(rules);
+        Engine.run(rounds, rulesAndRounds, userName);
     }
-    public String showWrongAnswer(String answer, int result) {
-        String correctAnswer = Primes.isPrime(result) ? "'yes'." : "'no'.";
-        return "'" + answer + "'"
-                .concat(" is wrong answer ;(. Correct answer was ")
-                .concat(correctAnswer) + "\n"
-                .concat("Let's try again, ") + this.userName + "!";
-    }
+    /**
+     * Данный метод генерирует число, проверяет является ли число простым или нет.
+     * Переопределённый метод интерфейса Creatable является индивидуальным
+     * для каждой новой создаваемой игры.
+     * В зависимости от количество раундов, происходит генерация примеров - "ключей"
+     * и ответов на эти примеры - "значений", хранящиеся в Map.
+     * @return Мар, содержащий в себе примеры - "ключи" и ответы - "значения".
+     */
     @Override
-    public boolean checkAnswer(String answer, int result) {
-        if (Primes.isPrime(result) && "yes".equalsIgnoreCase(answer)) {
-            return true;
-        } else {
-            return !(Primes.isPrime(result)) && "no".equalsIgnoreCase(answer);
+    public Map<String, String> fill() {
+        Map<String, String> temp = new HashMap<>();
+        final Predicate<Integer> condition = Primes::isPrime;
+        while (temp.size() < rounds) {
+            int number = Utils.generate(1, 100);
+            temp.put(String.valueOf(number), condition.test(number) ? "yes" : "no");
         }
+        return temp;
     }
 }

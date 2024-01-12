@@ -1,45 +1,66 @@
 package hexlet.code.games;
 
-import hexlet.code.Cli;
-import hexlet.code.Engine;
+import hexlet.code.logic.Creatable;
+import hexlet.code.logic.Engine;
+import hexlet.code.logic.Utils;
 
-import java.util.Random;
-import java.util.Scanner;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Predicate;
 
-public class Even extends Cli implements Engine {
-    private final String description = "Answer 'yes' if the number is even, otherwise answer 'no'.";
-    private String userName;
-    public void evenNumbers() {
-        int correctAnswerCounter = 0;
-        boolean cycleOperation = true;
-        userName = super.welcome();
-        super.description(description);
-        Random random = new Random();
-        Scanner sc = new Scanner(System.in);
-        while (super.exitGame(correctAnswerCounter, userName, cycleOperation)) {
-            int randomNumber = random.nextInt(10, 100);
-            super.showQuestion(Integer.toString(randomNumber));
-            String answer = sc.nextLine().trim();
-            String checkWrongAnswer = super.showWrongAnswer(answer, randomNumber, userName);
-            correctAnswerCounter = equalAnswer(answer, checkWrongAnswer, randomNumber, correctAnswerCounter);
-        }
+/**
+ * Игра "Проверка на чётность" заключается в том, что бы дать ответ - является ли данное число
+ * чётным или нет.
+ * Пример:
+ *      Answer 'yes' if the number is even, otherwise answer 'no'.
+ *      Question: 26
+ *      Your Answer: yes
+ *      Correct!
+ */
+public class Even implements Creatable {
+    // имя пользователя (игрока) передаваемое через параметры конструктора.
+    private final String userName;
+    // количество раундов, настраиваемых через параметры конструктора.
+    private final int rounds;
+    /**
+     * Конструктор принимает только имя пользователя и количество раундов.
+     * @param userName имя пользователя (игрока).
+     * @param rounds количество раундов.
+     */
+    public Even(final String userName, final int rounds) {
+        this.userName = userName;
+        this.rounds = rounds;
     }
-    public boolean checkAnswer(String answer, int result) {
-        if (result % 2 == 0 && "yes".equalsIgnoreCase(answer)) {
-            return true;
-        } else {
-            return result % 2 != 0 && "no".equalsIgnoreCase(answer);
-        }
+    /**
+     * Метод evenNumber() представляет окончательную сборку игры и последующий запуск её при вызове.
+     * Метод подразделяет структуру в себе в виде Map, содержащую выражение (вопрос) как ключ
+     * и ответ в виде значения Мар, далее выводится на экран условие, после чего Мар передаётся в
+     * метод run(rounds, rulesAndRounds, userName) и запускает игру.
+     * @see Engine
+     */
+    public void evenNumber() {
+        Map<String, String> rulesAndRounds = fill();
+        String rules = "Answer 'yes' if the number is even, otherwise answer 'no'.";
+        Engine.getRules(rules);
+        Engine.run(rounds, rulesAndRounds, userName);
     }
+
+    /**
+     * Данный метод генерирует число, проверяет его на чётность и сохраняет корректный результат.
+     * Переопределённый метод интерфейса Creatable является индивидуальным
+     * для каждой новой создаваемой игры.
+     * В зависимости от количество раундов, происходит генерация примеров - "ключей"
+     * и ответов на эти примеры - "значений", хранящиеся в Map.
+     * @return Мар, содержащий в себе примеры - "ключи" и ответы - "значения".
+     */
     @Override
-    public int equalAnswer(String answer, String wrongAnswer, int result, int correctAnswerCounter) {
-        if (checkAnswer(answer, result)) {
-            System.out.println("Correct");
-            correctAnswerCounter++;
-        } else {
-            System.out.println(wrongAnswer);
-            correctAnswerCounter = -1;
+    public Map<String, String> fill() {
+        Map<String, String> temp = new HashMap<>();
+        Predicate<Integer> condition = Utils::isEvenNumber;
+        while (temp.size() < rounds) {
+            int number = Utils.generate(1, 100);
+            temp.put(String.valueOf(number), condition.test(number) ? "yes" : "no");
         }
-        return correctAnswerCounter;
+        return temp;
     }
 }

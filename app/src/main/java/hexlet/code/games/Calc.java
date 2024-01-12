@@ -1,53 +1,88 @@
 package hexlet.code.games;
 
-import hexlet.code.Cli;
-import hexlet.code.Engine;
+import hexlet.code.logic.Creatable;
+import hexlet.code.logic.Engine;
+import hexlet.code.logic.Utils;
 
-import java.util.Random;
-import java.util.Scanner;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.BiPredicate;
 
-public class Calc extends Cli implements Engine {
-    private final String description = "What is the result of the expression?";
-    private String userName;
-    private int changeOperator = 0;
-    private int result = 0;
-    private char operator = '+';
-    public void calculation() {
-        int correctAnswerCounter = 0;
-        boolean cycleOperation = true;
-        userName = welcome();
-        super.description(description);
-        Random random = new Random();
-        Scanner scanner = new Scanner(System.in);
-        while (super.exitGame(correctAnswerCounter, userName, cycleOperation)) {
-            int firstOperand = random.nextInt(1, 10);
-            int secondOperand = random.nextInt(1, 10);
-            setChangeOperator(firstOperand, secondOperand);
-            super.showQuestion(firstOperand + " " + operator + " " + secondOperand);
-            String answer = Integer.toString(scanner.nextInt()).trim();
-            String checkWrongAnswer = super.showWrongAnswer(answer, result, userName);
-            correctAnswerCounter = super.equalAnswer(answer, checkWrongAnswer, result, correctAnswerCounter);
-        }
+/**
+ * Игра "Калькулятор" представляет собой произвольное выражение двух случайно-сгенерированных числе,
+ * на которое требуется дать ответ.
+ * Пример:
+ *      Answer: What is the result of the expression?
+ *      Question: 11 * 11
+ *      Your Answer: 121
+ *      Correct!
+ */
+public class Calc implements Creatable {
+    //имя пользователя (игрока) передаваемое через параметры конструктора.
+    private final String userName;
+    // количество раундов, настраиваемых через параметры конструктора.
+    private final int rounds;
+    // список операторов.
+    private final List<String> operators = List.of("+", "-", "*");
+
+    /**
+     * Конструктор принимает только имя пользователя и количество раундов.
+     * @param userName имя пользователя (игрока).
+     * @param rounds количество раундов.
+     */
+    public Calc(final String userName, final int rounds) {
+        this.userName = userName;
+        this.rounds = rounds;
     }
-    private void setChangeOperator(int firstOperand, int secondOperand) {
-        switch (changeOperator) {
-            case 0:
-                result = firstOperand + secondOperand;
-                operator = '+';
-                changeOperator++;
-                break;
-            case 1:
-                result = firstOperand - secondOperand;
-                operator = '-';
-                changeOperator++;
-                break;
-            case 2:
-                result = firstOperand * secondOperand;
-                operator = '*';
-                changeOperator = 0;
-                break;
-            default:
-                System.out.println("Incorrect input value");
+    /**
+     * Метод calc() представляет окончательную сборку игры и последующий запуск её при вызове.
+     * Метод подразделяет структуру в себе в виде Map, содержащую выражение (вопрос) как ключ
+     * и ответ в виде значения Мар, далее выводится на экран условие, после чего Мар передаётся в
+     * метод run(rounds, rulesAndRounds, userName) и запускает игру.
+     * @see Engine
+     */
+    public void calc() {
+        Map<String, String> rulesAndRounds = fill();
+        String rules = "What is the result of the expression?";
+        Engine.getRules(rules);
+        Engine.run(rounds, rulesAndRounds, userName);
+    }
+    /**
+     * Метод fill() генерирует операции (сложения, вычитания или умножения) в зависимости от
+     * случайно-сгенерированных операторов, содержащихся в списке operators.
+     * Переопределённый метод интерфейса Creatable является индивидуальным
+     * для каждой новой создаваемой игры.
+     * В зависимости от количество раундов, происходит генерация примеров - "ключей"
+     * и ответов на эти примеры - "значений", хранящиеся в Map.
+     * @return Мар, содержащий в себе примеры - "ключи" и ответы - "значения".
+     */
+    @Override
+    public Map<String, String> fill() {
+        Map<String, String> rulesAndRounds = new HashMap<>();
+        while (rulesAndRounds.size() < rounds) {
+            int x = Utils.generate(1, 20);
+            int y = Utils.generate(1, 20);
+            String operator = operators.get(Utils.generate(0, rounds));
+            String question =  x + " " + operator + " " + y;
+            rulesAndRounds.put(question, getCorrectAnswer(x, y, operator, String::equals));
         }
+        return rulesAndRounds;
+    }
+
+    /**
+     * В зависимости от принимаемого знака оператора реализует операцию (сложения, вычитания, умножения).
+     * @param x случайно-сгенерированное число.
+     * @param y случайно-сгенерированное число.
+     * @param operator произвольный оператор из списка List<String> operators.
+     * @param condition функциональный интерфейс, задающий логику проверки операторов,
+     *                 для определения числовой операции.
+     * @return в зависимости от сработанного условия (сумма, разность, умножение) чисел в виде строки.
+     */
+    private String getCorrectAnswer(int x, int y, String operator, BiPredicate<String, String> condition) {
+        if (condition.test("+", operator)) {
+            return String.valueOf(x + y);
+        }
+        return condition.test("*", operator) ? String.valueOf(x * y) : String.valueOf(x - y);
     }
 }

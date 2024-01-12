@@ -1,57 +1,127 @@
 package hexlet.code.games;
 
-import hexlet.code.Engine;
+import hexlet.code.logic.Creatable;
+import hexlet.code.logic.Engine;
+import hexlet.code.logic.Utils;
 
-import java.util.Random;
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class Progression extends Calc implements Engine {
+/**
+ * Игра "Прогрессия" генерирует числовую прогрессию с фиксированным шагом
+ * и заменяя один из случайных значений в ней на "..", предлагая пользователю (игроку)
+ * отгадать значение вместо двоеточий.
+ * Пример:
+ *      Answer: What number is missing in the progression?.
+ *      Question: 14 28 46 92 .. 368
+ *      Your Answer: 184
+ *      Correct!
+ */
+public class Progression implements Creatable {
+    // имя пользователя (игрока) передаваемое через параметры конструктора.
+    private final String userName;
+    // количество раундов, настраиваемых через параметры конструктора.
+    private final int rounds;
 
-    private final String description = "What number is missing in the progression?";
-    private String userName;
-    private final int capacity = 10;
+    /**
+     * Конструктор принимает только имя пользователя и количество раундов.
+     * @param userName имя пользователя (игрока).
+     * @param rounds количество раундов.
+     */
+    public Progression(final String userName, final int rounds) {
+        this.userName = userName;
+        this.rounds = rounds;
+    }
+    /**
+     * Метод evenNumber() представляет окончательную сборку игры и последующий запуск её при вызове.
+     * Метод подразделяет структуру в себе в виде Map, содержащую выражение (вопрос) как ключ
+     * и ответ в виде значения Мар, далее выводится на экран условие, после чего Мар передаётся в
+     * метод run(rounds, rulesAndRounds, userName) и запускает игру.
+     * @see Engine
+     */
     public void progression() {
-        int correctAnswerCounter = 0;
-        boolean cycleOperation = true;
-        userName = super.welcome();
-        super.description(description);
-        Random random = new Random();
-        Scanner scanner = new Scanner(System.in);
-        while (super.exitGame(correctAnswerCounter, userName, cycleOperation)) {
-            StringBuilder question = new StringBuilder();
-            String[] numbers = new String[capacity];
-            getProgression(numbers, random);
-            int hiddenElement = getAnswer(question, numbers, random);
-            super.showQuestion(question.toString().trim());
-            String answer = Integer.toString(scanner.nextInt()).trim();
-            String checkWrongAnswer = super.showWrongAnswer(answer, hiddenElement, userName);
-            correctAnswerCounter = super.equalAnswer(answer, checkWrongAnswer, hiddenElement, correctAnswerCounter);
-        }
+        Map<String, String> rulesAndRounds = fill();
+        String rules = "What number is missing in the progression?";
+        Engine.getRules(rules);
+        Engine.run(rounds, rulesAndRounds, userName);
     }
-    private void getProgression(String[] numbers, Random random) {
-        int randomNumber = random.nextInt(3, 50);
-        int step = random.nextInt(3, 9);
-        int[] temp = new int[numbers.length];
-        for (int i = 0; i < numbers.length; i++) {
-            randomNumber = randomNumber + step;
-            temp[i] = randomNumber;
+    /**
+     * Данный метод генерирует числовую прогрессию с одним спрятанным значением и
+     * имеющий вид "..", так же, в качестве корректного ответа вместо ".." он сохраняется.
+     * Переопределённый метод интерфейса Creatable является индивидуальным
+     * для каждой новой создаваемой игры.
+     * В зависимости от количество раундов, происходит генерация примеров - "ключей"
+     * и ответов на эти примеры - "значений", хранящиеся в Map.
+     * @return Мар, содержащий в себе примеры - "ключи" и ответы - "значения".
+     */
+    @Override
+    public Map<String, String> fill() {
+        Map<String, String> temp = new HashMap<>();
+        while (temp.size() < rounds) {
+            String progression = getProgression();
+            String modifiedProgression = getProgressionWinHiddenElement(progression);
+            temp.put(modifiedProgression, getHiddenElement(progression, modifiedProgression));
         }
-        for (int i = 0; i < numbers.length; i++) {
-            numbers[i] = Integer.toString(temp[i]);
-        }
+        return temp;
     }
-    private int getAnswer(StringBuilder question, String[] numbers, Random random) {
-        int hiddenElement = 0;
+
+    /**
+     * Предназначен только для генерации числовой последовательности с неизменным шагом.
+     * @return числовую прогрессию в виде строки.
+     */
+    private String getProgression() {
+        List<String> keys = new ArrayList<>();
+        int number = Utils.generate(1, 20);
+        int step = Utils.generate(1, 9);
+        int length = Utils.generate(5, 10);
+        for (int i = 0; i < length; i++) {
+            number += step;
+            keys.add(String.valueOf(number));
+        }
+        return String.join(" ", keys);
+    }
+
+    /**
+     * Создаёт новую прогрессию с произвольно одним "спрятанным" элементом на основе
+     * переданной числовой прогрессии в виде строки.
+     * @param progression числовая прогрессия в виде строки.
+     * @return прогрессию с одним "спрятанным" в произвольном порядке элементом.
+     */
+    private String getProgressionWinHiddenElement(final String progression) {
+        StringBuilder stringBuilder = new StringBuilder();
         int index = 0;
-        int hideElementNumber = random.nextInt(0, 9);
-        for (String element : numbers) {
-            if (index == hideElementNumber) {
-                hiddenElement = Integer.parseInt(element);
-                element = "..";
+        int hide = Utils.generate(0, (progression.length() / 2) - 1);
+        for (String number : progression.split(" ")) {
+            if (index == hide) {
+                stringBuilder
+                        .append("..")
+                        .append(" ");
+            } else {
+                stringBuilder
+                        .append(number)
+                        .append(" ");
             }
             index++;
-            question.append(" ".concat(element));
         }
-        return hiddenElement;
+        return stringBuilder.toString().trim();
+    }
+
+    /**
+     * Находит и возвращает значение, которое было заменено в числовой последовательности.
+     * @param progression числовая прогрессия в виде строки.
+     * @param modifiedProgression прогрессия с одним "спрятанным" в произвольном порядке элементом.
+     * @return элемент, который был спрятан в числовой прогрессии.
+     */
+    private String getHiddenElement(final String progression, final String modifiedProgression) {
+        String[] temp = modifiedProgression.split(" ");
+        int index = 0;
+        for (String number : progression.split(" ")) {
+            if (!temp[index++].equals(number)) {
+                return number;
+            }
+        }
+        return "";
     }
 }
