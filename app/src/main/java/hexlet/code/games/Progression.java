@@ -2,6 +2,7 @@ package hexlet.code.games;
 
 import hexlet.code.logic.Creatable;
 import hexlet.code.logic.Engine;
+import hexlet.code.logic.Numbers;
 import hexlet.code.logic.Utils;
 
 import java.util.ArrayList;
@@ -74,9 +75,9 @@ public class Progression implements Creatable {
      */
     private String getProgression() {
         List<String> keys = new ArrayList<>();
-        int number = Utils.generate(1, 20);
-        int step = Utils.generate(1, 9);
-        int length = Utils.generate(5, 10);
+        int number = Utils.generate(Numbers.TWELVE.getValue());
+        int step = Utils.generate(Numbers.TEN.getValue());
+        int length = Utils.generate(Numbers.FIVE.getValue(), Numbers.TEN.getValue());
         for (int i = 0; i < length; i++) {
             number += step;
             keys.add(String.valueOf(number));
@@ -93,7 +94,7 @@ public class Progression implements Creatable {
     private String getProgressionWinHiddenElement(final String progression) {
         StringBuilder stringBuilder = new StringBuilder();
         int index = 0;
-        int hide = Utils.generate(0, (progression.length() / 3));
+        int hide = Utils.generate((progression.length() / Numbers.THREE.getValue()));
         for (String number : progression.split(" ")) {
             if (index == hide) {
                 stringBuilder

@@ -3,7 +3,7 @@ package hexlet.code;
 import hexlet.code.logic.LaunchGame;
 
 /**
- * Класс Приложение предназначен исключительно для запуска игры.
+ * Класс "Приложение" предназначен исключительно для запуска игры.
  */
 public class App {
     App() { }

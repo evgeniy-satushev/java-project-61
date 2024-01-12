@@ -8,15 +8,24 @@ import java.util.Random;
  */
 public class Utils {
     Utils() { }
+
     /**
-     * Генерирует случайное число в переделах, установленными параметрами метода,
-     * такие как "минимальное значение" и "максимальное значение".
-     * @param min ограничение генерации числа по низу.
-     * @param max ограничение генерации числа по верху.
+     * Генерирует случайное число в переделах заданных в параметрах значений минимума до максимума.
+     * @param min минимальное значение.
+     * @param max максимальное значение.
      * @return случайно-сгенерированное число.
      */
     public static int generate(final int min, final int max) {
         return new Random().nextInt(min, max);
+    }
+
+    /**
+     * Перегруженный метод generate, которой на вход принимает только один параметр.
+     * @param number максимальное значение.
+     * @return случайно-сгенерированное число.
+     */
+    public static int generate(final int number) {
+        return generate(Numbers.ONE.getValue(), number);
     }
 
     /**

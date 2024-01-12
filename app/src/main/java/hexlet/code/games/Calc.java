@@ -2,6 +2,7 @@ package hexlet.code.games;
 
 import hexlet.code.logic.Creatable;
 import hexlet.code.logic.Engine;
+import hexlet.code.logic.Numbers;
 import hexlet.code.logic.Utils;
 
 import java.util.HashMap;
@@ -28,12 +29,12 @@ public class Calc implements Creatable {
 
     /**
      * Конструктор принимает только имя пользователя и количество раундов.
-     * @param userName имя пользователя (игрока).
-     * @param rounds количество раундов.
+     * @param  name пользователя (игрока).
+     * @param numberOfRounds количество раундов.
      */
-    public Calc(final String userName, final int rounds) {
-        this.userName = userName;
-        this.rounds = rounds;
+    public Calc(final String name, final int numberOfRounds) {
+        this.userName = name;
+        this.rounds = numberOfRounds;
     }
     /**
      * Метод calc() представляет окончательную сборку игры и последующий запуск её при вызове.
@@ -61,9 +62,9 @@ public class Calc implements Creatable {
     public Map<String, String> fill() {
         Map<String, String> rulesAndRounds = new HashMap<>();
         while (rulesAndRounds.size() < rounds) {
-            int x = Utils.generate(1, 20);
-            int y = Utils.generate(1, 20);
-            String operator = operators.get(Utils.generate(0, rounds));
+            int x = Utils.generate(Numbers.TWELVE.getValue());
+            int y = Utils.generate(Numbers.TWELVE.getValue());
+            String operator = operators.get(Utils.generate(Numbers.ZERO.getValue(), rounds));
             String question =  x + " " + operator + " " + y;
             rulesAndRounds.put(question, getCorrectAnswer(x, y, operator, String::equals));
         }

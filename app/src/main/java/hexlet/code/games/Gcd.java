@@ -2,6 +2,7 @@ package hexlet.code.games;
 
 import hexlet.code.logic.Creatable;
 import hexlet.code.logic.Engine;
+import hexlet.code.logic.Numbers;
 import hexlet.code.logic.Utils;
 
 import java.util.HashMap;
@@ -56,8 +57,8 @@ public class Gcd implements Creatable {
     public Map<String, String> fill() {
         Map<String, String> rulesAndRounds = new HashMap<>();
         while (rulesAndRounds.size() < rounds) {
-            int x = Utils.generate(1, 100);
-            int y = Utils.generate(1, 100);
+            int x = Utils.generate(Numbers.ONE_HUNDRED.getValue());
+            int y = Utils.generate(Numbers.ONE_HUNDRED.getValue());
             String question =  x + " " + y;
             String correctAnswer = String.valueOf(gcdByEuclidAlgorithm(x, y));
             rulesAndRounds.put(question, correctAnswer);
@@ -72,7 +73,7 @@ public class Gcd implements Creatable {
      * @return наибольший общий делитель двух передаваемых значений.
      */
     private int gcdByEuclidAlgorithm(int x, int y) {
-        if (y == 0) {
+        if (y == Numbers.ZERO.getValue()) {
             return x;
         }
         return gcdByEuclidAlgorithm(y, x % y);

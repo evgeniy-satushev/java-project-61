@@ -17,10 +17,11 @@ import java.util.concurrent.atomic.AtomicInteger;
  * а также их запуск при вводе пользователем номера варианта игры.
  */
 public class LaunchGame {
-    LaunchGame() { }
-    // список предлагаемых игр
+    // количество раундов в игре.
+    private static final int ROUNDS = 3;
+    // список предлагаемых игр.
     private static final List<String> GAMES = List.of("Greet", "Even", "Calc", "GCD", "Progression", "Prime", "Exit");
-
+    LaunchGame() { }
     /**
      * Предназначен для запуска и выбора игры под определённым номером,
      * при попытке ввести любое значение не определённое правилам выбора
@@ -76,23 +77,23 @@ public class LaunchGame {
             case 0 -> { }
             case 1 -> Cli.greeting();
             case 2 -> {
-                Even even = new Even(Cli.greeting(), 3);
+                Even even = new Even(Cli.greeting(), ROUNDS);
                 even.evenNumber();
             }
             case 3 -> {
-                Calc calc = new Calc(Cli.greeting(), 3);
+                Calc calc = new Calc(Cli.greeting(), ROUNDS);
                 calc.calc();
             }
             case 4 -> {
-                Gcd gcd = new Gcd(Cli.greeting(), 3);
+                Gcd gcd = new Gcd(Cli.greeting(), ROUNDS);
                 gcd.greatestCommonDiv();
             }
             case 5 -> {
-                Progression progression = new Progression(Cli.greeting(), 3);
+                Progression progression = new Progression(Cli.greeting(), ROUNDS);
                 progression.progression();
             }
             case 6 -> {
-                Prime prime = new Prime(Cli.greeting(), 3);
+                Prime prime = new Prime(Cli.greeting(), ROUNDS);
                 prime.primeNumbers();
             }
             default -> System.out.println("!?");
