@@ -23,6 +23,7 @@ public class Even implements Creatable {
     private final String userName;
     // количество раундов, настраиваемых через параметры конструктора.
     private final int rounds;
+
     /**
      * Конструктор принимает только имя пользователя и количество раундов.
      * @param userName имя пользователя (игрока).
@@ -32,6 +33,7 @@ public class Even implements Creatable {
         this.userName = userName;
         this.rounds = rounds;
     }
+
     /**
      * Метод evenNumber() представляет окончательную сборку игры и последующий запуск её при вызове.
      * Метод подразделяет структуру в себе в виде Map, содержащую выражение (вопрос) как ключ

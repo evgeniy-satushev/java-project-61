@@ -36,6 +36,7 @@ public class Calc implements Creatable {
         this.userName = userName;
         this.rounds = rounds;
     }
+
     /**
      * Метод calc() представляет окончательную сборку игры и последующий запуск её при вызове.
      * Метод подразделяет структуру в себе в виде Map, содержащую выражение (вопрос) как ключ
@@ -49,6 +50,7 @@ public class Calc implements Creatable {
         Engine.getRules(rules);
         Engine.run(rounds, rulesAndRounds, userName);
     }
+
     /**
      * Метод fill() генерирует операции (сложения, вычитания или умножения) в зависимости от
      * случайно-сгенерированных операторов, содержащихся в списке operators.

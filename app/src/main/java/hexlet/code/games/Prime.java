@@ -24,6 +24,7 @@ public class Prime implements Creatable {
     private final String userName;
     // количество раундов, настраиваемых через параметры конструктора.
     private final int rounds;
+
     /**
      * Конструктор принимает только имя пользователя и количество раундов.
      * @param userName имя пользователя (игрока).
@@ -33,6 +34,7 @@ public class Prime implements Creatable {
         this.userName = userName;
         this.rounds = rounds;
     }
+
     /**
      * Метод evenNumber() представляет окончательную сборку игры и последующий запуск её при вызове.
      * Метод подразделяет структуру в себе в виде Map, содержащую выражение (вопрос) как ключ
@@ -46,6 +48,7 @@ public class Prime implements Creatable {
         Engine.getRules(rules);
         Engine.run(rounds, rulesAndRounds, userName);
     }
+
     /**
      * Данный метод генерирует число, проверяет является ли число простым или нет.
      * Переопределённый метод интерфейса Creatable является индивидуальным

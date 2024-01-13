@@ -68,35 +68,52 @@ public class LaunchGame {
     }
 
     /**
-     * Принимает на вход число, выбранное пользователем,
+     * Принимает на вход число выбранное пользователем,
      * и в зависимости от порядкового номера сопоставленного с игрой запускает определённый кейс.
      * @param choiceGame выбор пользователя.
      */
     private static void changeGame(int choiceGame) {
-        switch (choiceGame) {
-            case 0 -> { }
-            case 1 -> Cli.greeting();
-            case 2 -> {
+        Numbers choice = getNumber(choiceGame);
+        switch (choice) {
+            case ZERO -> { }
+            case ONE -> Cli.greeting();
+            case TWO -> {
                 Even even = new Even(Cli.greeting(), ROUNDS);
                 even.evenNumber();
             }
-            case 3 -> {
+            case THREE -> {
                 Calc calc = new Calc(Cli.greeting(), ROUNDS);
                 calc.calc();
             }
-            case 4 -> {
+            case FOUR -> {
                 Gcd gcd = new Gcd(Cli.greeting(), ROUNDS);
                 gcd.greatestCommonDiv();
             }
-            case 5 -> {
+            case FIVE -> {
                 Progression progression = new Progression(Cli.greeting(), ROUNDS);
                 progression.progression();
             }
-            case 6 -> {
+            case SIX -> {
                 Prime prime = new Prime(Cli.greeting(), ROUNDS);
                 prime.primeNumbers();
             }
             default -> System.out.println("!?");
         }
+    }
+
+    /**
+     * Преобразует из целочисленного числа в объект перечисления.
+     * @param choice целое число.
+     * @return объект перечисление сопоставленный сопоставленный с входящим числом,
+     * если числа нету списке объекта "Перечисления", то вернётся ноль.
+     */
+    private static Numbers getNumber(int choice) {
+        List<Numbers> numbers = Numbers.getAll();
+        for (Numbers number : numbers) {
+            if (number.getValue() == choice) {
+                return number;
+            }
+        }
+        return Numbers.ZERO;
     }
 }

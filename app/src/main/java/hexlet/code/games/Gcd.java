@@ -22,6 +22,7 @@ public class Gcd implements Creatable {
     private final String userName;
     // количество раундов, настраиваемых через параметры конструктора.
     private final int rounds;
+
     /**
      * Конструктор принимает только имя пользователя и количество раундов.
      * @param userName имя пользователя (игрока).
@@ -31,6 +32,7 @@ public class Gcd implements Creatable {
         this.userName = userName;
         this.rounds = rounds;
     }
+
     /**
      * Метод calc() представляет окончательную сборку игры и последующий запуск её при вызове.
      * Метод подразделяет структуру в себе в виде Map, содержащую выражение (вопрос) как ключ
@@ -45,6 +47,7 @@ public class Gcd implements Creatable {
         Engine.getRules(rules);
         Engine.run(rounds, rulesAndRounds, userName);
     }
+
     /**
      * Метод fill() генерирует два произвольных числа и находит их наибольший общий делитель.
      * Переопределённый метод интерфейса Creatable является индивидуальным
