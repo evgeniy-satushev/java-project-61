@@ -22,21 +22,20 @@ import java.util.Map;
  */
 public class Progression implements Creatable {
 
-    /**
-     * Конструктор принимает только имя пользователя и количество раундов.
-     * @param userName имя пользователя (игрока).
-     * @param rounds количество раундов.
-     */
-    public Progression(final String userName, final int rounds) {
-        this.userName = userName;
-        this.rounds = rounds;
-    }
-
     // имя пользователя (игрока) передаваемое через параметры конструктора.
     private final String userName;
     // количество раундов, настраиваемых через параметры конструктора.
     private final int rounds;
 
+    /**
+     * Конструктор принимает только имя пользователя и количество раундов.
+     * @param name имя пользователя (игрока).
+     * @param numberOfRounds количество раундов.
+     */
+    public Progression(final String name, final int numberOfRounds) {
+        this.userName = name;
+        this.rounds = numberOfRounds;
+    }
 
     /**
      * Метод evenNumber() представляет окончательную сборку игры и последующий запуск её при вызове.
