@@ -20,10 +20,6 @@ import java.util.function.Predicate;
  *      Correct!
  */
 public class Prime implements Creatable {
-    // имя пользователя (игрока) передаваемое через параметры конструктора.
-    private final String userName;
-    // количество раундов, настраиваемых через параметры конструктора.
-    private final int rounds;
 
     /**
      * Конструктор принимает только имя пользователя и количество раундов.
@@ -34,6 +30,11 @@ public class Prime implements Creatable {
         this.userName = userName;
         this.rounds = rounds;
     }
+
+    // имя пользователя (игрока) передаваемое через параметры конструктора.
+    private final String userName;
+    // количество раундов, настраиваемых через параметры конструктора.
+    private final int rounds;
 
     /**
      * Метод evenNumber() представляет окончательную сборку игры и последующий запуск её при вызове.

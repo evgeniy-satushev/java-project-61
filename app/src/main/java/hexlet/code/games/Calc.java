@@ -20,12 +20,6 @@ import java.util.function.BiPredicate;
  *      Correct!
  */
 public class Calc implements Creatable {
-    //имя пользователя (игрока) передаваемое через параметры конструктора.
-    private final String userName;
-    // количество раундов, настраиваемых через параметры конструктора.
-    private final int rounds;
-    // список операторов.
-    private final List<String> operators = List.of("+", "-", "*");
 
     /**
      * Конструктор принимает только имя пользователя и количество раундов.
@@ -36,6 +30,13 @@ public class Calc implements Creatable {
         this.userName = userName;
         this.rounds = rounds;
     }
+
+    //имя пользователя (игрока) передаваемое через параметры конструктора.
+    private final String userName;
+    // количество раундов, настраиваемых через параметры конструктора.
+    private final int rounds;
+    // список операторов.
+    private final List<String> operators = List.of("+", "-", "*");
 
     /**
      * Метод calc() представляет окончательную сборку игры и последующий запуск её при вызове.

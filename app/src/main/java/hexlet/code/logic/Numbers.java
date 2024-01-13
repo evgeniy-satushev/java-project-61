@@ -13,10 +13,10 @@ public enum Numbers {
     TEN(10),
     TWELVE(20),
     ONE_HUNDRED(100);
-    private final int number;
     Numbers(final int number) {
         this.number = number;
     }
+    private final int number;
     public int getValue() {
         return number;
     }

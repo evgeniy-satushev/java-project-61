@@ -18,10 +18,6 @@ import java.util.Map;
  *      Correct!
  */
 public class Gcd implements Creatable {
-    // имя пользователя (игрока) передаваемое через параметры конструктора.
-    private final String userName;
-    // количество раундов, настраиваемых через параметры конструктора.
-    private final int rounds;
 
     /**
      * Конструктор принимает только имя пользователя и количество раундов.
@@ -32,6 +28,11 @@ public class Gcd implements Creatable {
         this.userName = userName;
         this.rounds = rounds;
     }
+
+    // имя пользователя (игрока) передаваемое через параметры конструктора.
+    private final String userName;
+    // количество раундов, настраиваемых через параметры конструктора.
+    private final int rounds;
 
     /**
      * Метод calc() представляет окончательную сборку игры и последующий запуск её при вызове.
