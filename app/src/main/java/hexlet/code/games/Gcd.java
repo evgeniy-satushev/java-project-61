@@ -41,9 +41,8 @@ public class Gcd implements Creatable {
      * метод run(rounds, rulesAndRounds, userName) и запускает игру.
      * @see Engine
      */
-
     public void greatestCommonDiv() {
-        Map<String, String> rulesAndRounds = fill();
+        Map<String, Object> rulesAndRounds = fill();
         String rules = "Find the greatest common divisor of given numbers.";
         Engine.getRules(rules);
         Engine.run(rounds, rulesAndRounds, userName);
@@ -58,8 +57,8 @@ public class Gcd implements Creatable {
      * @return Мар, содержащий в себе примеры - "ключи" и ответы - "значения".
      */
     @Override
-    public Map<String, String> fill() {
-        Map<String, String> rulesAndRounds = new HashMap<>();
+    public Map<String, Object> fill() {
+        Map<String, Object> rulesAndRounds = new HashMap<>();
         while (rulesAndRounds.size() < rounds) {
             int x = Utils.generate(Numbers.ONE_HUNDRED.getValue());
             int y = Utils.generate(Numbers.ONE_HUNDRED.getValue());

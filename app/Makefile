@@ -1,2 +1,4 @@
-run-dist: # run CLI application
+run-dist:
 	./build/install/app/bin/app
+run:
+	./gradlew run

@@ -15,5 +15,5 @@ public interface Creatable {
      * что в свою очередь, может быть отображено через реализацию Мар.
      * @return Map.
      */
-    Map<String, String> fill();
+    Map<String, Object> fill();
 }

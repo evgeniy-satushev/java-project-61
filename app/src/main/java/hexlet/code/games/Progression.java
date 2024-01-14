@@ -45,7 +45,7 @@ public class Progression implements Creatable {
      * @see Engine
      */
     public void progression() {
-        Map<String, String> rulesAndRounds = fill();
+        Map<String, Object> rulesAndRounds = fill();
         String rules = "What number is missing in the progression?";
         Engine.getRules(rules);
         Engine.run(rounds, rulesAndRounds, userName);
@@ -61,8 +61,8 @@ public class Progression implements Creatable {
      * @return Мар, содержащий в себе примеры - "ключи" и ответы - "значения".
      */
     @Override
-    public Map<String, String> fill() {
-        Map<String, String> temp = new HashMap<>();
+    public Map<String, Object> fill() {
+        Map<String, Object> temp = new HashMap<>();
         while (temp.size() < rounds) {
             String progression = getProgression();
             String modifiedProgression = getProgressionWinHiddenElement(progression);

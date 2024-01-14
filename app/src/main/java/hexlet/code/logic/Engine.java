@@ -2,9 +2,9 @@ package hexlet.code.logic;
 
 import java.util.InputMismatchException;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Scanner;
 
-import static org.apache.commons.lang3.math.NumberUtils.isCreatable;
 
 /**
  * Класс "Движок" отвечает за общение с пользователем,
@@ -25,37 +25,27 @@ public class Engine {
      *                      а в качестве значения будет - "ответ" на него.
      * @param userName представляет собой имя пользователя (игрока).
      */
-
-    public static void run(final int rounds, final Map<String, String> rulesAndRounds, final String userName) {
+    public static void run(final int rounds, final Map<String, Object> rulesAndRounds, final String userName) {
         int correctAnswerCounter = 0;
         Scanner sc = new Scanner(System.in);
-        for (Map.Entry<String, String> entry : rulesAndRounds.entrySet()) {
+        Object value = Engine.getFirstValue(rulesAndRounds);
+        for (Map.Entry<String, Object> entry : rulesAndRounds.entrySet()) {
             Engine.getQuestion(entry.getKey());
-            if (isCreatable(entry.getValue())) {
-                String answer;
-                try {
-                    answer = String.valueOf(sc.nextInt());
-                } catch (InputMismatchException e) {
-                    Engine.showIncorrectAnswer(sc.nextLine(), entry.getValue(), userName);
+            if (value instanceof Integer) {
+                if (!isInputInteger(sc, entry.getValue(), userName)) {
                     break;
                 }
-                if (!answer.equals(entry.getValue())) {
-                    Engine.showIncorrectAnswer(answer, entry.getValue(), userName);
+                String answer = String.valueOf(sc.nextInt());
+                if (!checkAnswer(answer, entry.getValue(), userName)) {
                     break;
-                } else {
-                    correctAnswerCounter++;
-                    Engine.printCorrectWord();
                 }
             } else {
                 String answer = sc.nextLine();
-                if (!answer.equals(entry.getValue())) {
-                    Engine.showIncorrectAnswer(answer, entry.getValue(), userName);
+                if (!checkAnswer(answer, entry.getValue(), userName)) {
                     break;
-                } else {
-                    correctAnswerCounter++;
-                    Engine.printCorrectWord();
                 }
             }
+            correctAnswerCounter++;
         }
         if (correctAnswerCounter == rounds) {
             Engine.endGame(userName);
@@ -71,13 +61,63 @@ public class Engine {
     }
 
     /**
+     * Предназначен для взятия первого элемента из списка всех значений.
+     * @param rulesAndRounds Map, содержащий в себе в виде ключа - "пример",
+     *                      а в качестве значения будет - "ответ" на него.
+     * @return первый элемент значения, являющийся корректным ответом.
+     */
+    private static Object getFirstValue(final Map<String, Object> rulesAndRounds) {
+        Optional<Object> firstValue = rulesAndRounds.values()
+                .stream()
+                .findFirst();
+        return firstValue.orElse("");
+    }
+
+    /**
+     * Проверяет, является ли текущее значение полученное из сканера числом
+     * и выводит сообщение об неправильном ответе при отрицательном результате.
+     * @param sc объект сканер.
+     * @param correctAnswer содержит правильный ответ в задаче.
+     * @param name имя пользователя (игрока).
+     * @return если в сканер попадёт строка, то вернётся ложь.
+     */
+    private static boolean isInputInteger(Scanner sc, final Object correctAnswer, final String name) {
+        try {
+            sc.nextInt();
+        } catch (InputMismatchException e) {
+            Engine.showIncorrectAnswer(sc.nextLine(), correctAnswer, name);
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * При дачи неправильного ответа игрока сравниваемое с корректным значением будет выведено
+     * на экран сообщение о неправильном ответе, в обратном случае будет выведено сообщение
+     * о корректном ответе.
+     * @param answer содержит ответ пользователя (игрока).
+     * @param correctAnswer cодержит правильный ответ в задаче.
+     * @param userName имя пользователя (игрока).
+     * @return ложь, если ответ был неправильным.
+     */
+    private static boolean checkAnswer(final String answer, final Object correctAnswer, final String userName) {
+        if (!answer.equals(correctAnswer)) {
+            Engine.showIncorrectAnswer(answer, correctAnswer, userName);
+            return false;
+        } else {
+            Engine.printCorrectWord();
+        }
+        return true;
+    }
+
+    /**
      * При неправильном ответе пользователя (игрока) происходит вывод на экран
      * ответа игрока совместно с правильным результатом.
      * @param response содержит ответ пользователя (игрока).
      * @param correctAnswer содержит правильный ответ в задаче.
      * @param userName имя пользователя (игрока).
      */
-    private static void showIncorrectAnswer(final String response, final String correctAnswer, final String userName) {
+    private static void showIncorrectAnswer(final String response, final Object correctAnswer, final String userName) {
         System.out.printf("'%s' is wrong answer ;(. Correct answer was '%s'"
                 + "\nLet's try again, %s!", response, correctAnswer, userName);
     }

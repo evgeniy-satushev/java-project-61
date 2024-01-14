@@ -46,7 +46,7 @@ public class Calc implements Creatable {
      * @see Engine
      */
     public void calc() {
-        Map<String, String> rulesAndRounds = fill();
+        Map<String, Object> rulesAndRounds = fill();
         String rules = "What is the result of the expression?";
         Engine.getRules(rules);
         Engine.run(rounds, rulesAndRounds, userName);
@@ -62,8 +62,8 @@ public class Calc implements Creatable {
      * @return Мар, содержащий в себе примеры - "ключи" и ответы - "значения".
      */
     @Override
-    public Map<String, String> fill() {
-        Map<String, String> rulesAndRounds = new HashMap<>();
+    public Map<String, Object> fill() {
+        Map<String, Object> rulesAndRounds = new HashMap<>();
         while (rulesAndRounds.size() < rounds) {
             int x = Utils.generate(Numbers.TWELVE.getValue());
             int y = Utils.generate(Numbers.TWELVE.getValue());

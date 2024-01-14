@@ -43,7 +43,7 @@ public class Even implements Creatable {
      * @see Engine
      */
     public void evenNumber() {
-        Map<String, String> rulesAndRounds = fill();
+        Map<String, Object> rulesAndRounds = fill();
         String rules = "Answer 'yes' if the number is even, otherwise answer 'no'.";
         Engine.getRules(rules);
         Engine.run(rounds, rulesAndRounds, userName);
@@ -58,8 +58,8 @@ public class Even implements Creatable {
      * @return Мар, содержащий в себе примеры - "ключи" и ответы - "значения".
      */
     @Override
-    public Map<String, String> fill() {
-        Map<String, String> temp = new HashMap<>();
+    public Map<String, Object> fill() {
+        Map<String, Object> temp = new HashMap<>();
         Predicate<Integer> condition = Utils::isEvenNumber;
         while (temp.size() < rounds) {
             int number = Utils.generate(Numbers.ONE_HUNDRED.getValue());
